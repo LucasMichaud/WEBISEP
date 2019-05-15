@@ -4,7 +4,7 @@ include("General.php");
 <html>
 	<head>
 		<title>Connexion</title>
-	<link rel="stylesheet" href="design/Connexion.css" />
+	<link rel="stylesheet" href="design/connexion.css" />
 		<meta charset="utf-8">
 	</head>
 	<body>
