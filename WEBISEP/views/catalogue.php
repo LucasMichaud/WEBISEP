@@ -18,7 +18,7 @@ if(isset($_SESSION['id']) AND $_SESSION['id']>0)
 	<h2>Catalogue</h2>
 	
 
-<div id="live_house"></div>
+<div id="live_cat"></div>
 <script>
 
 $(document).ready(function(){  
@@ -27,7 +27,7 @@ $(document).ready(function(){
         url:"index.php?action=cat_fetch",  
         method:"POST", 
         success:function(data){  
-          $('#live_house').html(data);  
+          $('#live_cat').html(data);  
         }  
       });  
     }  

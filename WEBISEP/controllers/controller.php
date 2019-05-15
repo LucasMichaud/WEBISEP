@@ -557,7 +557,7 @@ function cat_fetch() {
               <td id="cat_desc" contenteditable>Informations</td>
               <td id="cat_price" contenteditable> €</td>
               <td id="cat_weight" contenteditable> g</td>
-              <td id="cat_type" contenteditable> XXX-XXX</td> 
+              <td id="cat_type" contenteditable>type</td> 
               <td><button type="button" name="btn_add_cat" id="btn_add_cat"><i class="material-icons">add</i></button></td>  
             </tr>
           </table>';
