@@ -70,7 +70,31 @@ function addTopic($selection,$titre,$pseudo,$date,$question){
     $reqPublier->execute(array($titre,$pseudo,$date,$question));
 }
 
-
+/*fonction pour billet.php*/
+function affichBillet($id){
+	$bdd=bdd();
+	$request=$bdd-> prepare("SELECT * FROM billet WHERE author='$id'");
+	$request->execute(array());
+	return $request;
+}
+function affichAllBillet(){
+	$bdd=bdd();
+	$request=$bdd-> prepare("SELECT * FROM billet");
+	$request->execute(array());
+	return $request;
+}
+function billet_delete() {
+	$bdd=bdd();
+    $delete = $_GET['delete'];
+    $reqDelete = $bdd->prepare("DELETE FROM billet WHERE id_billet = ?");
+    $reqDelete->execute(array($delete));
+    return($reqDelete);
+}
+function addBillet($titre,$pseudo,$date,$question){
+	$bdd=bdd();
+	$reqPublier = $bdd->prepare('INSERT INTO billet(titre,author,date_billet,Question)  VALUES(?,?,?,?)');
+    $reqPublier->execute(array($titre,$pseudo,$date,$question));
+}
 
 /*partie topic.php*/
 function affichQuestion($selection,$numtopic){
@@ -98,6 +122,35 @@ function addPost($id,$reponse,$pseudo,$date){
     $reqPublier = $bdd->prepare('INSERT INTO message(reponse,pseudo,id_topic,date_message)  VALUES(?,?,"'.$id.'",?)');
     $reqPublier->execute(array($reponse,$pseudo,$date));
         }
+
+/*partie messagerie.php*/
+function affichProbleme($numbillet){
+	$bdd=bdd();
+	$request=$bdd-> prepare("SELECT* FROM billet WHERE author=? AND id_billet= ? ");
+	$request->execute(array($_SESSION['pseudo'],$numbillet));
+	return $request;
+
+}
+
+function affichAnswer($numbillet){
+	$bdd=bdd();
+	$reqReponse=$bdd -> prepare("SELECT * FROM messagerie JOIN billet ON messagerie.id_billet=billet.id_billet WHERE billet.id_billet=? ORDER BY messagerie.date_message");
+	$reqReponse->execute(array($numbillet));
+	return $reqReponse;
+}
+function answer_delete() {
+	$bdd=bdd();
+    $deleteMessage = $_GET['deleteMessage'];
+    $reqDelete = $bdd->prepare("DELETE FROM messagerie WHERE id = ?");
+    $reqDelete->execute(array($deleteMessage));
+    return($reqDelete);
+}
+function addAnswer($id,$reponse,$pseudo,$date){
+     $bdd=bdd();
+    $reqPublier = $bdd->prepare('INSERT INTO messagerie(reponse,pseudo,id_billet,date_message)  VALUES(?,?,"'.$id.'",?)');
+    $reqPublier->execute(array($reponse,$pseudo,$date));
+        }
+
 
 /*Page Expertise*/
 function catalogue(){    
@@ -369,6 +422,67 @@ function fav($idm) {
 	$fav->execute(array($idm));
 	return $fav;
 }
+
+
+
+/*family*/
+function rooms2($idh,$idm) {
+	$bdd = bdd();
+	$rooms = $bdd->prepare("SELECT * FROM room WHERE HouseID = ? AND MemberID = ?");
+	$rooms->execute(array($idh,$idm));
+	return $rooms;
+}
+function status_update($id,$text) {
+	$connect = connect();
+	$sql = "UPDATE familystatus SET StatusName ='".$text."' WHERE StatusID='".$id."'";  
+ 	if(mysqli_query($connect, $sql))  {  
+      echo 'Data Updated';  
+ 	}   
+}
+function status_delete() {
+	$connect = connect();
+    $sql = "DELETE FROM familystatus WHERE StatusID = '".$_POST["id"]."'";  
+    mysqli_query($connect, $sql);
+}
+function status_insert() {
+	$connect = connect();
+    $sql = "INSERT INTO familystatus(StatusName,HouseID) VALUES('".$_POST["status_name"]."',".$_POST["idh"].")";  
+    mysqli_query($connect, $sql);
+}
+function status_select($idh) {
+	$connect = connect(); 
+	$sql = "SELECT * FROM familystatus WHERE HouseID =".$idh;  
+ 	$result = mysqli_query($connect, $sql);
+ 	return $result;
+}
+
+/*catalogue*/
+function cat_update($id,$text,$column_name) {
+	$connect = connect();
+	$sql = "UPDATE catalogue SET ".$column_name."='".$text."' WHERE CatID='".$id."'";  
+ 	if(mysqli_query($connect, $sql))  {  
+      echo 'Data Updated';  
+ 	}   
+}
+function cat_delete() {
+	$connect = connect();
+    $sql = "DELETE FROM catalogue WHERE catID = '".$_POST["id"]."'";  
+    mysqli_query($connect, $sql);
+}
+function cat_insert() {
+	$connect = connect();
+    $sql = "INSERT INTO catalogue(CatName,CatDesc,CatPrice,CatWeight,CatType) VALUES('".$_POST["cat_name"]."','".$_POST["cat_desc"]."','".$_POST["cat_price"]."','".$_POST["cat_weight"]."','".$_POST["cat_type"]."')";  
+    mysqli_query($connect, $sql);
+}
+function cat_select() {
+	$connect = connect(); 
+	$sql = "SELECT * FROM catalogue";  
+ 	$result = mysqli_query($connect, $sql);
+ 	return $result;
+}
+
+
+
 
 function temp_update($temp) {
 	$connect = connect();
