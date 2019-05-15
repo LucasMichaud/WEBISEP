@@ -78,20 +78,68 @@ if(isset($_GET['deleteMessage']) AND !empty($_GET['deleteMessage'])){
     }
   include"views/topic.php";
 }
+function billet(){
+  
+  if (isset($_POST['publier']))
+        {  
+        session_start();
+        date_default_timezone_set( 'Europe/Paris' );
+        $titre=$_POST['titre'];
+      $question=$_POST['Question'];
+      $pseudo=$_SESSION['pseudo'];
+      $date=date("Y-m-d H:i:s");
+    addBillet($titre,$pseudo,$date,$question);
+    $url="index.php?action=billet";
+    header("Location:".$url);
+  }
+  else{
+    // nothing to do: pas de nouveau topic
+  }
+  if(isset($_GET['delete']) AND !empty($_GET['delete'])){
+      billet_delete();
+
+      $url="index.php?action=billet";
+      header("Location:".$url);
+    }
+  
+  include "views/billet.php";
+}
+
+function messagerie(){
+    if (isset($_POST['publier']))
+    {  
+      session_start();
+      date_default_timezone_set( 'Europe/Paris' );
+      $reponse=$_POST['reponse'];
+          $pseudo=$_SESSION['pseudo'];
+          $date=date("Y-m-d H:i:s");
+          addAnswer($numtopic,$reponse,$pseudo,$date);
+
+    /*redirection*/
+    $url="index.php?action=topic&numtopic=".$numtopic;
+    header("Location:".$url);
+}
+if(isset($_GET['deleteMessage']) AND !empty($_GET['deleteMessage'])){
+      answer_delete();
+    $url="index.php?action=topic&numtopic=".$numtopic;
+    header("Location:".$url);
+    }
+  include"views/messagerie.php";
+}
 
 /*Accueil*/
 function accueil(){
   include 'views/Accueil.php';
-}
-/*parametre*/
-function parametre(){
-    include 'views/parametres.php';
 }
 
 /*Expertise*/
 function expertise(){
   $messages=catalogue();
   include 'views/Expertise.php';
+}
+
+function cat(){
+  include 'views/catalogue.php';
 }
 
 /*FAQ*/
@@ -117,7 +165,7 @@ function FAQ(){
 
 /*A propos de nous*/
 function AProposDeNous(){
-	include 'views/About.php';
+  include 'views/About.php';
 
 }
 
@@ -443,8 +491,6 @@ function house_fetch() {
               <td><button type="button" name="btn_add_house" id="btn_add_house"><i class="material-icons">add</i></button></td>  
             </tr>
           </table>';
-  $image = house_select();
- 
   echo $output;  
 }
 
@@ -454,7 +500,6 @@ function house_edit() {
   $column_name = $_POST["column_name"];   
   house_update($id,$text,$column_name);
 }
-
 
 function favHouse() {
     include "views/General.php";
@@ -468,6 +513,135 @@ function favHouse() {
 }
 
 
+function cat_add() {
+  cat_insert();
+}
+
+function cat_remove() {
+  cat_delete();
+}
+
+function cat_fetch() {
+  $output = '';
+  $row = 0;
+  $result = cat_select();
+  $output .= '  
+      <table id="captors">
+            <th>Nom</th>
+            <th>Description</th>
+            <th>Prix</th>
+            <th>Poids</th>
+            <th>Type</th>
+            <th></th>'; 
+  
+  if(mysqli_num_rows($result) > 0) { 
+    while($row = mysqli_fetch_array($result)) {     
+      $output .= '
+        <tr>
+          <td class="cat_name" data-id1="'.$row["CatID"].'" contenteditable>'.$row["CatName"].'</td>
+          <td class="cat_desc" data-id2="'.$row["CatID"].'" contenteditable>'.$row["CatDesc"].'</td>
+          <td class="cat_price" data-id3="'.$row["CatID"].'" contenteditable>'.$row["CatPrice"].'</td> 
+          <td class="cat_weight" data-id4="'.$row["CatID"].'" contenteditable>'.$row["CatWeight"].'</td> 
+          <td class="cat_type" data-id5="'.$row["CatID"].'" contenteditable>'.$row["CatType"].'</td>   
+          <td><button type="button" name="btn_delete_cat" data-id6="'.$row["CatID"].'" class="btn_delete_cat"><i class="material-icons">delete</i></button></td>
+            
+        </tr>';   
+    }
+  }
+  else {  
+
+  }
+    $output .= '
+            <tr> 
+              <td id="cat_name" contenteditable>Nouveau capteur</td>
+              <td id="cat_desc" contenteditable>Informations</td>
+              <td id="cat_price" contenteditable> €</td>
+              <td id="cat_weight" contenteditable> g</td>
+              <td id="cat_type" contenteditable> XXX-XXX</td> 
+              <td><button type="button" name="btn_add_cat" id="btn_add_cat"><i class="material-icons">add</i></button></td>  
+            </tr>
+          </table>';
+  echo $output;  
+}
+
+function cat_edit() {
+  $id = (int) $_POST["id"];  
+  $text = $_POST["text"];
+  $column_name = $_POST["column_name"];   
+  cat_update($id,$text,$column_name);
+}
+
+
+
+
+
+function status_add() {
+  status_insert();
+}
+
+function status_remove() {
+  status_delete();
+}
+
+
+function status_fetch() {
+  $output = '';
+  $row = 0;
+  $houses = house($_POST["idm"]);
+  foreach($houses as $house) {
+    $idh = $house["HouseID"];
+    $houseName = $house["HouseName"];
+    $result = status_select($idh);
+    $output .= '  
+        <table id="status">
+          '; 
+    if(mysqli_num_rows($result) > 0) { 
+      while($row = mysqli_fetch_array($result)) {  
+        $rooms = rooms2($idh,$_POST["idm"]);  
+        $output .= '
+          <tr>
+            <td class="status_name" data-id1="'.$row["StatusID"].'" contenteditable>'.$row["StatusName"].'</td> 
+            <td><button type="button" name="btn_delete_status" data-id2="'.$row["StatusID"].'" class="btn_delete_status"><i class="material-icons">delete</i></button></td>';
+            /*$roomStatus = roomStatus();
+            if (mysqli_num_rows($roomStatus) > 0)  {
+
+            }*/
+          $output .= '  
+            <td>
+                  <select name="room" id="langue">
+                    ';
+                  
+                  foreach($rooms as $room) { 
+                      $output .= '<option value="'.$room['RoomID'].'">'.$room['RoomName'].'</option>';
+                    }
+
+                  $output .= '</select>  
+            </td>
+            <td><button type="button" name="btn_add_room" id="btn_add_room"><i class="material-icons">add</i></button></td> 
+            <td><button type="button" name="btn_delete_room" data-id3="1" class="btn_delete_room"><i class="material-icons">delete</i></button></td>
+          </tr>';   
+      }
+    }
+    else {  
+
+    }
+      $output .= '
+              <tr> 
+                <td id="status_name" contenteditable>Nouveau statut pour maison:'.$houseName.'</td>
+                <td><button type="button" name="btn_add_status" id="btn_add_status"><i class="material-icons">add</i></button></td>  
+              </tr>
+            </table>';
+  }        
+  echo $output;  
+}
+
+function status_edit() {
+  $id = (int) $_POST["id"];  
+  $text = $_POST["text"]; 
+  status_update($id,$text);
+}
+
+
 function thermometer() {
   $roomTempReq = "liieirf";
   /*$temp = $_POST["temp"];  
@@ -477,7 +651,7 @@ function thermometer() {
 
 /*Partie Minh Nam*/
 function inscription(){
-  
+    
     if(isset($_POST['forminscription']))
 {
     $nom = htmlspecialchars($_POST['nom']);
@@ -512,35 +686,28 @@ function inscription(){
                         {
                             if ($mdp==$mdp2)
                             {
-                                $pattern = '/(?=^.{6,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/';
-                                if(preg_match($pattern, $_POST['mdp'] )) 
+                                $longueurKey = 15;
+                                $key = "";
+                                for($i=1;$i<$longueurKey;$i++)
                                 {
-                                    $longueurKey = 15;
-                                    $key = "";
-                                    for($i=1;$i<$longueurKey;$i++)
-                                    {
-                                        $key .= mt_rand(0,9);
-                                    }
-                                    AddUser($pseudo,$mail,$mdp,$key,$nom,$prenom,$adresse,$code,$ville);
-                                    $header="MIME-Version: 1.0\r\n";
-                                    $header.='From:"WebISep"<domisepg4@gmail.com>'."\n";
-                                    $header.='Content-Type:text/html; charset="uft-8"'."\n";
-                                    $header.='Content-Transfer-Encoding: 8bit';
-                                    $message='
-                                    <html>
-                                        <body>
-                                            <div align="center">
-                                                <a href="http://localhost/SiteDomisep/index.php?action=confirmation&pseudo='.urlencode($pseudo).'&key='.$key.'">Confirmer votre compte</a>
-                                            </div>
-                                        </body>
-                                    </html>
-                                    ';
-                                    mail($mail, "Confirmation de compte", $message, $header);
-                                    $erreur = "Votre compte a bien été crée <a href=\"index.php?action=connexion\">Me connecter</a>" ;
-
+                                    $key .= mt_rand(0,9);
                                 }
-                                else{
-                                    $erreur = " Votre mot de passe ne contient pas un caractère spécial, une lettre minuscule, une lettre majuscule, un chiffre ou ne dépasse pas 6 caractères. ";}
+                                AddUser($pseudo,$mail,$mdp,$key,$nom,$prenom,$adresse,$code,$ville);
+                                $header="MIME-Version: 1.0\r\n";
+                                $header.='From:"WebISep"<nguyenminhnamisep@gmail.com>'."\n";
+                                $header.='Content-Type:text/html; charset="uft-8"'."\n";
+                                $header.='Content-Transfer-Encoding: 8bit';
+                                $message='
+                                <html>
+                                    <body>
+                                        <div align="center">
+                                            <a href="http://localhost/app/Confirmation.php?pseudo='.urlencode($pseudo).'&key='.$key.'">Confirmer votre compte</a>
+                                        </div>
+                                    </body>
+                                </html>
+                                ';
+                                /*mail($mail, "Confirmation de compte", $message, $header);*/
+                                $erreur = "Votre compte a bien été crée <a href=\"index.php?action=connexion\">Me connecter</a>" ;
                             }
                             else{ $erreur = "Vos mots de passe ne correspondent pas";}
                         }
@@ -582,7 +749,7 @@ function connexion(){
             if($requser->rowCount()==1)
             {
                 $userinfo = $requser->fetch();
-                if($userinfo['confirme']==1 AND $userinfo['admin']==0)
+                if($userinfo['confirme']==1)
                 {
                     session_start();
                     $_SESSION['id'] = $userinfo['id'];
@@ -615,7 +782,7 @@ function connexion(){
             $erreur = "Tous les champs doivent être complétés";
         }
     }
-      include "views/Connexion.php";
+        include "views/Connexion.php";
 }
 
 function profil (){
@@ -634,8 +801,13 @@ function editionprofil(){
     include "views/editionprofil.php";
 }
 
-function contact(){
 
+function parametre(){
+        include "views/General.php";
+        include "views/parametres.php";
+
+}
+function contact(){
 if(isset($_POST['sendmail']))
  {
    if(!empty($_POST['pseudo']) AND !empty($_POST['mail']) AND !empty($_POST['message'])) 
@@ -657,7 +829,7 @@ if(isset($_POST['sendmail']))
          </body>
       </html>
       ';
-      mail("domisepg4@gmail.com", "DomIsep", $message, $header);
+      mail("nguyen.minhnam@hotmail.fr", "DomIsep", $message, $header);
       $msg="Votre message a bien été envoyé !";
    } 
    else 
@@ -670,6 +842,10 @@ if(isset($_POST['sendmail']))
 
 function administration(){
     $bdd=bdd();
+    if(isset($_GET['admin']) AND $_GET['admin']==0)
+    {
+        exit();
+    }
     if(isset($_GET['id']) AND $_GET['id']>0)
     {
         Administrationutilisateur();
@@ -684,181 +860,6 @@ function administration(){
     }
     $membres = $bdd->query('SELECT * FROM membres');
     include "views/Administration.php";
-}
-
-
-function recuperation(){
-$bdd=bdd();
-session_start();
-if(isset($_GET['section'])) {
-
-$section = htmlspecialchars($_GET['section']);
-
-} else {
-
-$section = "";
-
-}
-
-if(isset($_POST['recup_submit'],$_POST['recup_mail'])) {
-   if(!empty($_POST['recup_mail'])) {
-      $recup_mail = htmlspecialchars($_POST['recup_mail']);
-      if(filter_var($recup_mail,FILTER_VALIDATE_EMAIL)) {
-          $mailexist = $bdd->prepare('SELECT id,pseudo FROM membres WHERE mail = ?');
-          $mailexist->execute(array($recup_mail));
-          $mailexist_count = $mailexist->rowCount();
-         if($mailexist_count == 1) {
-            $pseudo = $mailexist->fetch();
-            $pseudo = $pseudo['pseudo'];
-            
-            $_SESSION['recup_mail'] = $recup_mail;
-            $recup_code = "";
-            for($i=0; $i < 8; $i++) { 
-               $recup_code .= mt_rand(0,9);
-            }
-            $mail_recup_exist=Testmailexist($recup_mail);
-            if($mail_recup_exist == 1) {
-               Mailexist($recup_code,$recup_mail);
-            } else {
-               Mailnotexist($recup_mail,$recup_code);
-             }
-            
-
-        $header="MIME-Version: 1.0\r\n";
-        $header.='From:"WebISep"<domisepg4@gmail.com>'."\n";
-        $header.='Content-Type:text/html; charset="uft-8"'."\n";
-        $header.='Content-Transfer-Encoding: 8bit';
-        $message = '
-        <html>
-        <head>
-          <title>Récupération de mot de passe</title>
-          <meta charset="utf-8" />
-        </head>
-        <body>
-          <font color="#303030";>
-            <div align="center">
-              <table width="600px">
-                <tr>
-                  <td>
-                    
-                    <div align="center">Bonjour <b>'.$pseudo.'</b>,</div>
-                    Voici votre code de récupération: <b>'.$recup_code.'</b>
-                    
-                  </td>
-                </tr>
-                <tr>
-                  <td align="center">
-                    <font size="2">
-                      Ceci est un email automatique, merci de ne pas y répondre
-                    </font>
-                  </td>
-                </tr>
-              </table>
-            </div>
-          </font>
-        </body>
-        </html>
-        ';
-        mail($recup_mail, "Mot de passe oublié", $message, $header);
-        header("Location:index.php?action=recuperation&section=code");
-
-      }
-      else
-      {
-        $error = "Cette adresse mail n'existe pas";
-      }
-    }
-    else{
-      $error="Adresse mail invalide";
-    }
-  }
-  else
-  {
-    $error= "Veuillez entrer votre adresse mail";
-  }
-}
-
-
-if(isset($_POST['verif_submit'],$_POST['verif_code'])) {
-   if(!empty($_POST['verif_code'])) {
-      $verif_code = htmlspecialchars($_POST['verif_code']);
-      $verif_req=Verificationcode($verif_code);
-      if($verif_req == 1) {
-         Verificationconfirmed();
-         header('Location:index.php?action=recuperation&section=changemdp');
-      } else {
-         $error = "Code invalide";
-      }
-   } else {
-      $error = "Veuillez entrer votre code de confirmation";
-   }
-}
-if(isset($_POST['change_submit'])) {  
-   if(isset($_POST['change_mdp'],$_POST['change_mdpc'])) {
-      $verif_confirme=TestVerification();
-      if($verif_confirme == 1) {
-         $mdp = htmlspecialchars($_POST['change_mdp']);
-         $mdpc = htmlspecialchars($_POST['change_mdpc']);
-         if(!empty($mdp) AND !empty($mdpc)) {
-            if($mdp == $mdpc) {
-              $pattern = '/(?=^.{6,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/';
-              $mdp = sha1($mdp);
-              if(preg_match($pattern, $_POST['change_mdp'] )) 
-              {
-                Reinitialisationmdp($mdp);
-                header('Location:index.php?action=connexion');
-             }
-             else
-             {
-                  $error = " Votre mot de passe ne contient pas un caractère spécial, une lettre minuscule, une lettre majuscule, un chiffre ou ne dépasse pas 6 caractères. ";
-             }
-            } else {
-               $error = "Vos mots de passes ne correspondent pas";
-            }
-         } else {
-            $error = "Veuillez remplir tous les champs";
-         }
-      } else {
-         $error = "Veuillez valider votre mail grâce au code de vérification qui vous a été envoyé par mail";
-      }
-   } else {
-      $error = "Veuillez remplir tous les champs";
-   }
-}
- include"views/Recuperation.php";
-}
-
-function confirmation()
-{
-  $bdd = bdd();
-  if(isset($_GET['pseudo'], $_GET['key']) AND !empty($_GET['pseudo']) AND !empty($_GET['key']))
-  {
-    $pseudo = htmlspecialchars(urldecode($_GET['pseudo']));
-    $key = intval($_GET['key']);
-    $requser = $bdd->prepare("SELECT * FROM membres WHERE pseudo  = ? AND confirmkey = ?");
-    $requser->execute(array($pseudo, $key));
-    $userexist= $requser->rowCount();
-    if($userexist == 1)
-    {
-      $user = $requser->fetch();
-      if($user['confirme']==0)
-      {
-        $updateuser = $bdd->prepare("UPDATE membres SET confirme = 1 WHERE pseudo = ? AND confirmkey = ? ");
-        $updateuser-> execute(array($pseudo,$key));
-        header('Location:index.php?action=connexion');
-        echo "Votre compte a bien été crée";
-        
-      }
-      else
-      {
-        echo "Votre compte a déjà été confirmé";
-      }
-    }
-    else
-    {
-      echo "L'utilisateur n'existe pas";
-    }
-  }
 }
 
 function statistique(){
