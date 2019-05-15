@@ -9,10 +9,16 @@ if(isset($_GET["action"]) && !empty($_GET['action'])){
             forum();
             break;
         case 'categorie':
-          	categorie();
-          	break;
+            categorie();
+            break;
         case 'topic':
             topic();
+            break;
+        case 'messagerie':
+            messagerie();
+            break;
+        case 'billet':
+            billet();
             break;
         case 'accueil':
             accueil();
@@ -112,8 +118,36 @@ if(isset($_GET["action"]) && !empty($_GET['action'])){
         case 'favHouse':
           favHouse();
           break;
+         case 'cat_remove':
+          cat_remove();
+          break;
+        case 'cat_add':
+          cat_add();
+          break;
+        case 'cat_fetch':
+          cat_fetch();
+          break;
+        case 'cat_edit':
+          cat_edit();
+          break;
+        case 'cat':
+            cat();
+
+
         case 'thermometer':
           thermometer();
+          break;
+        case 'status_remove':
+          status_remove();
+          break;
+        case 'status_add':
+          status_add();
+          break;
+        case 'status_fetch':
+          status_fetch();
+          break;
+        case 'status_edit':
+          status_edit();
           break;
           
             /*Minh Nam*/
