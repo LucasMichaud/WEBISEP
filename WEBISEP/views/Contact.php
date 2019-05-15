@@ -2,19 +2,19 @@
 <html>
 	<head>
 		<title>Contact us</title>
+		<link rel="stylesheet" href="design/contact.css" />
 		<meta charset="utf-8">
 	</head>
 	<body>
 <div class="tabl">
 		<div align="center">
 			<h2>Nous contacter</h2>
-			<br /><br /><br />
 			<form method="POST" action="">
 				<table>
 					
 					<tr>
 						<td align="right">
-							<label for ="pseudo">Pseudo: </label>
+							<label for ="pseudo">Pseudo :</label>
 						</td>
 						<td>
 							<input type="text" placeholder="Votre pseudo" id="pseudo" name="pseudo" />
@@ -23,7 +23,7 @@
 
 					<tr>
 						<td align="right">
-							<label for ="mail">Mail </label>
+							<label for ="mail">Mail :</label>
 						</td>
 						<td>
 							<input type="text" placeholder="Mail" id="mail" name="mail" />
@@ -32,7 +32,7 @@
 
 					<tr>
 						<td align="right">
-							<label for ="Message">Message </label>
+							<label for ="Message">Message :</label>
 						</td>
 						<td>
 							<textarea name="message" placeholder="Votre message" cols="100" rows="10"></textarea>
