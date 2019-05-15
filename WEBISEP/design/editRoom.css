@@ -1,0 +1,137 @@
+body {
+  width: 100%;
+  height: 400px;
+  background-image:url(../image/bulb.jpg);
+  background-size:cover;    
+  background-repeat:no-repeat; 
+  background-attachment:fixed;
+}
+
+#live {
+	position: absolute;
+  	left: 5%;
+  	top: 120px;
+  	right: 5%;
+}
+
+.live {
+	display: inline-grid;
+ 	margin: 25px;
+  position: relative;
+  width: 20%;
+}
+#top {
+  height:50px;
+  width: 100%;  
+  box-shadow: rgba(0,0,0,0.1) 0 5px 15px;
+  position: relative;
+  background-color: #cfcfcf;
+  text-align: center;
+  height: 33px;
+  padding: 15px 0 0 0px;
+}
+#bot {
+  background-color: rgba(243, 243, 243, 0.8);
+} 
+
+.room_name, .lamp_name, .window_name, .captor_name{
+	width: 150px;
+  position: relative;
+}
+
+#lamp_name, #window_name, #captor_name{
+  font-style: italic;
+  color: #cfcfcf;
+}
+
+
+
+td {
+  padding: 5px 5px 5px 10px;
+}
+
+.switch {
+  position: absolute;
+  display: block;
+  right: 7px;
+  bottom: 7px;
+  width: 30px;
+  height: 17px;
+}
+
+.switch input { 
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: 13px;
+  background-color: #ccc;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 13px;
+  width: 13px;
+  left: 2px;
+  border-radius: 50%;
+  bottom: 2px;
+  background-color: white;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+input:checked + .slider {
+  background-color: #4cd964;
+}
+input:checked + .slider:before {
+  -webkit-transform: translateX(13px);
+  -ms-transform: translateX(13px);
+  transform: translateX(13px);
+}
+
+.btn_delete_room, .btn_delete_lamp, .btn_delete_window, .btn_delete_captor, #btn_add_room, #btn_add_lamp, #btn_add_window, #btn_add_captor {
+  background: none;
+  border: none;
+}
+
+@media all and (max-width:1180px) {
+
+.live {
+  width: 17%;
+  margin: 15px;
+}
+
+}
+
+@media all and (max-width:830px) {
+
+#live {
+  top: 170px;
+}
+.live {
+  width: 30%;
+}
+
+}
+
+@media all and (max-width:650px) {
+
+.live {
+  width: 85%;
+}
+.room_name, .lamp_name, .window_name, .captor_name{
+  width: 420px;
+}
+
+}

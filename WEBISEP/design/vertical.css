@@ -1,0 +1,92 @@
+/*body{
+  font-family: 'Source code pro', Calibri, serif;
+  margin: 0px;
+  padding:0px;
+  height: 100%;
+  width:100%;
+  
+}*/
+.range-slider {
+  position: absolute;
+  height: 125px;
+  text-align: center;
+
+}
+
+.thermometer {
+  position: absolute;
+  margin-top: 20px;
+  cursor: pointer;
+  -webkit-appearance: none; 
+  height:98px; 
+  left:13px;
+  width:6px;
+  border: 1px solid: #cfcfcf;
+  background-color: #cfcfcf;
+  border-radius: 20px;  
+  z-index: 2;
+}
+
+.bulb {
+  position: absolute;
+  margin-top: 15px;
+  cursor: pointer;
+  -webkit-appearance: none; 
+  height:26px; 
+  bottom: 39px;
+  left:2px;
+  width:26px;
+  border: 1px solid #cfcfcf; 
+  background-color: #cfcfcf;
+  border-radius: 26px;  
+  z-index:1;
+}
+.print {
+  position: absolute;
+  margin-top:0px;
+  height:26px; 
+  top: 120px;
+  left:0px;
+  padding:5px;
+}
+/*Slider personnalisé*/
+input[type="range"].vertical 
+{ 
+  position: absolute;
+  top: 57px;
+  left:-36px;
+  cursor: pointer;
+  -webkit-appearance: none; 
+  width:100px; 
+  z-index: 2;
+  visibility: hidden;
+}
+/*Slider personnalisé sur le focus*/
+input[type="range"].vertical:focus
+{
+  border: 0; 
+  outline: none; 
+  z-index: 2;
+}
+/*Icon personnalisé du slider*/ 
+input[type="range"].vertical::-webkit-slider-thumb 
+{
+  -webkit-appearance: none; 
+  width: 17px; 
+  height: 17px; 
+  background-color: #ff0000; 
+  -webkit-border-radius: 20px; 
+  -moz-border-radius: 20px; 
+  -o-border-radius: 20px;
+  visibility: visible;
+  z-index: 2;
+}
+/*Slider avec la valeur la plus basse en bas*/ 
+.vertical
+{
+  -webkit-transform:rotate(270deg); 
+  -moz-transform:rotate(270deg); 
+  -o-transform:rotate(270deg); 
+  -ms-transform:rotate(270deg); 
+  transform:rotate(270deg); 
+}
