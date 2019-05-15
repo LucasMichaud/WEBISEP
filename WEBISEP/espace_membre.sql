@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le :  mar. 22 jan. 2019 à 20:58
+-- Généré le :  mer. 15 mai 2019 à 09:18
 -- Version du serveur :  5.7.23
 -- Version de PHP :  7.2.10
 
@@ -48,6 +48,31 @@ INSERT INTO `annonces` (`id`, `intitule`, `texte`, `date`, `idUtilisateur`) VALU
 (3, 'Deux Roues', 'Recherche désespérément moto volée à proximité d\'Alexandria', '2016-10-23', 7),
 (4, 'Guillaume Tell', 'Recherche arbalète perdue aux abords d\'Alexandria.', '2016-12-11', 7),
 (5, 'Lucille', 'A vendre : batte de baseball très usée mais toujours utilisable.', '2016-10-23', 8);
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `billet`
+--
+
+DROP TABLE IF EXISTS `billet`;
+CREATE TABLE IF NOT EXISTS `billet` (
+  `id_billet` int(11) NOT NULL AUTO_INCREMENT,
+  `titre` text NOT NULL,
+  `date_billet` datetime NOT NULL,
+  `author` text NOT NULL,
+  `Question` text NOT NULL,
+  PRIMARY KEY (`id_billet`)
+) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+
+--
+-- Déchargement des données de la table `billet`
+--
+
+INSERT INTO `billet` (`id_billet`, `titre`, `date_billet`, `author`, `Question`) VALUES
+(1, 'Problème', '2019-05-14 00:00:00', 'hugo', 'Question ?'),
+(2, 'Problème 2', '2019-05-14 10:23:27', 'hugo', 'Question 2 ?'),
+(4, 'Capteur défectueux', '2019-05-14 10:34:36', 'moi', 'Le capteur de luminosité ne fonctionne pas correctement et mes lumières clignotent');
 
 -- --------------------------------------------------------
 
@@ -200,164 +225,68 @@ INSERT INTO `dbstatistique` (`id_stat`, `date`, `temperature`, `humite`, `id_cli
 -- --------------------------------------------------------
 
 --
--- Structure de la table `forum_categorie`
+-- Structure de la table `familymember`
 --
 
-DROP TABLE IF EXISTS `forum_categorie`;
-CREATE TABLE IF NOT EXISTS `forum_categorie` (
-  `cat_id` int(11) NOT NULL AUTO_INCREMENT,
-  `cat_nom` varchar(30) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL,
-  `cat_ordre` int(11) NOT NULL,
-  PRIMARY KEY (`cat_id`),
-  UNIQUE KEY `cat_ordre` (`cat_ordre`)
-) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
-
---
--- Déchargement des données de la table `forum_categorie`
---
-
-INSERT INTO `forum_categorie` (`cat_id`, `cat_nom`, `cat_ordre`) VALUES
-(1, 'Général', 30),
-(2, 'Jeux-Vidéos', 20),
-(4, 'Capteurs', 15),
-(5, 'Contact', 40);
-
--- --------------------------------------------------------
-
---
--- Structure de la table `forum_forum`
---
-
-DROP TABLE IF EXISTS `forum_forum`;
-CREATE TABLE IF NOT EXISTS `forum_forum` (
-  `forum_id` int(11) NOT NULL AUTO_INCREMENT,
-  `forum_cat_id` mediumint(8) NOT NULL,
-  `forum_name` varchar(30) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL,
-  `forum_desc` text CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL,
-  `forum_ordre` mediumint(8) NOT NULL,
-  `forum_last_post_id` int(11) NOT NULL,
-  `forum_topic` mediumint(8) NOT NULL,
-  `forum_post` mediumint(8) NOT NULL,
-  `auth_view` tinyint(4) NOT NULL,
-  `auth_post` tinyint(4) NOT NULL,
-  `auth_topic` tinyint(4) NOT NULL,
-  `auth_annonce` tinyint(4) NOT NULL,
-  `auth_modo` tinyint(4) NOT NULL,
-  PRIMARY KEY (`forum_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
-
---
--- Déchargement des données de la table `forum_forum`
---
-
-INSERT INTO `forum_forum` (`forum_id`, `forum_cat_id`, `forum_name`, `forum_desc`, `forum_ordre`, `forum_last_post_id`, `forum_topic`, `forum_post`, `auth_view`, `auth_post`, `auth_topic`, `auth_annonce`, `auth_modo`) VALUES
-(1, 1, 'Présentation', 'Nouveau sur le forum? Venez vous présenter ici !', 60, 0, 0, 0, 0, 0, 0, 0, 0),
-(2, 1, 'Les News', 'Les news du site sont ici', 50, 34, 8, 8, 1, 2, 2, 3, 4),
-(3, 1, 'Discussions générales', 'Ici on peut parler de tout sur tous les sujets', 40, 0, 0, 0, 0, 0, 0, 0, 0),
-(4, 2, 'Capteurs', 'Parlez ici des capteurs ainsi que des problèmes liés aux capteurs', 60, 33, 7, 7, 0, 0, 0, 0, 0),
-(5, 2, 'Authentification', 'Problèmes de connexions', 50, 0, 0, 0, 0, 0, 0, 0, 0),
-(6, 3, 'Connexion', 'Connexion', 60, 8, 3, 3, 0, 0, 0, 0, 0),
-(7, 3, 'Délires', 'Décrivez ici tous vos délires les plus fous', 50, 0, 0, 0, 0, 0, 0, 0, 0),
-(8, 1, 'Astuces', 'Voir les astuces liées aux connectiques', 50, 30, 3, 3, 1, 2, 2, 3, 4);
-
--- --------------------------------------------------------
-
---
--- Structure de la table `forum_membres`
---
-
-DROP TABLE IF EXISTS `forum_membres`;
-CREATE TABLE IF NOT EXISTS `forum_membres` (
-  `membre_id` int(11) NOT NULL AUTO_INCREMENT,
-  `membre_pseudo` varchar(30) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL,
-  `membre_mdp` varchar(32) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL,
-  `membre_email` varchar(250) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL,
-  `membre_msn` varchar(250) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL,
-  `membre_siteweb` varchar(100) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL,
-  `membre_avatar` varchar(100) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL,
-  `membre_signature` varchar(200) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL,
-  `membre_localisation` varchar(100) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL,
-  `membre_inscrit` int(11) NOT NULL,
-  `membre_derniere_visite` int(11) NOT NULL,
-  `membre_rang` tinyint(4) DEFAULT '2',
-  `membre_post` int(11) NOT NULL,
-  PRIMARY KEY (`membre_id`)
+DROP TABLE IF EXISTS `familymember`;
+CREATE TABLE IF NOT EXISTS `familymember` (
+  `FamilyID` int(11) NOT NULL AUTO_INCREMENT,
+  `OwnerID` int(11) NOT NULL,
+  `MemberID` int(11) NOT NULL,
+  `StatusID` int(11) NOT NULL,
+  PRIMARY KEY (`FamilyID`)
 ) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
 --
--- Déchargement des données de la table `forum_membres`
+-- Déchargement des données de la table `familymember`
 --
 
-INSERT INTO `forum_membres` (`membre_id`, `membre_pseudo`, `membre_mdp`, `membre_email`, `membre_msn`, `membre_siteweb`, `membre_avatar`, `membre_signature`, `membre_localisation`, `membre_inscrit`, `membre_derniere_visite`, `membre_rang`, `membre_post`) VALUES
-(1, 'paulo92isep', 'pauld', 'pauldevillers10@gmail.com', 'paulo92', 'domisep', 'Ne possède pas d\'avatar', 'paul92', 'Paris', 12, 23, 2, 1);
+INSERT INTO `familymember` (`FamilyID`, `OwnerID`, `MemberID`, `StatusID`) VALUES
+(1, 34, 35, 1);
 
 -- --------------------------------------------------------
 
 --
--- Structure de la table `forum_mp`
+-- Structure de la table `familyroom`
 --
 
-DROP TABLE IF EXISTS `forum_mp`;
-CREATE TABLE IF NOT EXISTS `forum_mp` (
-  `mp_id` int(11) NOT NULL AUTO_INCREMENT,
-  `mp_expediteur` int(11) NOT NULL,
-  `mp_receveur` int(11) NOT NULL,
-  `mp_titre` varchar(100) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL,
-  `mp_text` text CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL,
-  `mp_time` int(11) NOT NULL,
-  `mp_lu` enum('0','1') CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL,
-  PRIMARY KEY (`mp_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+DROP TABLE IF EXISTS `familyroom`;
+CREATE TABLE IF NOT EXISTS `familyroom` (
+  `FamilyRoomID` int(11) NOT NULL AUTO_INCREMENT,
+  `RoomID` int(11) NOT NULL,
+  `StatusID` int(11) NOT NULL,
+  PRIMARY KEY (`FamilyRoomID`)
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+
+--
+-- Déchargement des données de la table `familyroom`
+--
+
+INSERT INTO `familyroom` (`FamilyRoomID`, `RoomID`, `StatusID`) VALUES
+(1, 1, 1);
 
 -- --------------------------------------------------------
 
 --
--- Structure de la table `forum_post`
+-- Structure de la table `familystatus`
 --
 
-DROP TABLE IF EXISTS `forum_post`;
-CREATE TABLE IF NOT EXISTS `forum_post` (
-  `post_id` int(11) NOT NULL AUTO_INCREMENT,
-  `post_createur` int(11) NOT NULL,
-  `post_texte` text CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL,
-  `post_time` int(11) NOT NULL,
-  `topic_id` int(11) NOT NULL,
-  `post_forum_id` int(11) NOT NULL,
-  PRIMARY KEY (`post_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=36 DEFAULT CHARSET=latin1;
+DROP TABLE IF EXISTS `familystatus`;
+CREATE TABLE IF NOT EXISTS `familystatus` (
+  `StatusID` int(11) NOT NULL AUTO_INCREMENT,
+  `StatusName` varchar(256) DEFAULT NULL,
+  `HouseID` int(11) NOT NULL,
+  PRIMARY KEY (`StatusID`)
+) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 
 --
--- Déchargement des données de la table `forum_post`
+-- Déchargement des données de la table `familystatus`
 --
 
-INSERT INTO `forum_post` (`post_id`, `post_createur`, `post_texte`, `post_time`, `topic_id`, `post_forum_id`) VALUES
-(32, 0, 'sa bug!:O', 1544448628, 0, 0),
-(31, 0, 'Bonjour:D', 1544448440, 0, 0),
-(33, 0, 'dsqdsq', 1544449759, 0, 4),
-(34, 35, 'Bonjour', 1544451782, 0, 2),
-(35, 34, 'Bonjour je m\'appelle Minh Nam', 1544692937, 0, 0);
-
--- --------------------------------------------------------
-
---
--- Structure de la table `forum_topic`
---
-
-DROP TABLE IF EXISTS `forum_topic`;
-CREATE TABLE IF NOT EXISTS `forum_topic` (
-  `topic_id` int(11) NOT NULL AUTO_INCREMENT,
-  `forum_id` int(11) NOT NULL,
-  `topic_titre` char(60) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL,
-  `topic_createur` int(11) NOT NULL,
-  `topic_vu` mediumint(8) NOT NULL,
-  `topic_time` int(11) NOT NULL,
-  `topic_genre` varchar(30) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL,
-  `topic_last_post` int(11) NOT NULL,
-  `topic_first_post` int(11) NOT NULL,
-  `topic_post` mediumint(8) NOT NULL,
-  PRIMARY KEY (`topic_id`),
-  UNIQUE KEY `topic_last_post` (`topic_last_post`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+INSERT INTO `familystatus` (`StatusID`, `StatusName`, `HouseID`) VALUES
+(1, 'Enfant', 1),
+(3, 'Enfant', 9),
+(4, 'Invité', 9);
 
 -- --------------------------------------------------------
 
@@ -544,6 +473,30 @@ INSERT INTO `message` (`id`, `date_message`, `reponse`, `pseudo`, `id_topic`) VA
 (23, '2018-12-26 21:05:55', 'ok', 'hugo', 1),
 (24, '2018-12-26 21:22:54', 'rrr', 'hugo', 1),
 (26, '2019-01-14 11:00:21', 'Manges le ', 'hugo', 4);
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `messagerie`
+--
+
+DROP TABLE IF EXISTS `messagerie`;
+CREATE TABLE IF NOT EXISTS `messagerie` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `date_message` datetime DEFAULT NULL,
+  `reponse` text NOT NULL,
+  `pseudo` text NOT NULL,
+  `id_billet` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+
+--
+-- Déchargement des données de la table `messagerie`
+--
+
+INSERT INTO `messagerie` (`id`, `date_message`, `reponse`, `pseudo`, `id_billet`) VALUES
+(1, '2019-05-13 00:00:00', 'détails du problème', 'hugo', 1),
+(2, '2019-05-14 00:00:01', 'reponse', 'hugo', 4);
 
 -- --------------------------------------------------------
 
