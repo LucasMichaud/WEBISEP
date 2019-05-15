@@ -38,8 +38,7 @@ if (!empty($_SESSION['id'])) {
 					<div id="info">
 						<div id="temp"><?php if(isset(($room['RoomTemp']))) { echo $room['RoomTemp'].'°C'; } ?></div>
 						<div id="light"></div>
-						
-						<label for="<?php echo $idr; ?>"></label>
+						<div id="captor"><span title="Signaler un capteur défectueux ou autre problème"><a href="index.php?action=billet" id="report_problem"><i class="material-icons report_problem">report_problem</i></a></span></div>
 					</div>
 				</div>
 				<div id="bot">
@@ -84,7 +83,7 @@ if (!empty($_SESSION['id'])) {
 					</div>
 					<div id="options">
 						<div id="parameters">
-							<a href="index.php?action=editRoom&idh=<?= $idh ?>&idr=<?= $idr ?>"><i class="material-icons setting_btn">settings</i></a>
+							<span title="Modifier la pièce"><a href="index.php?action=editRoom&idh=<?= $idh ?>&idr=<?= $idr ?>"><i class="material-icons setting_btn">settings</i></a></span>
 						</div>
 						<?php
 						if(isset(($room['RoomTempState']))) { 
@@ -101,9 +100,9 @@ if (!empty($_SESSION['id'])) {
 				</div>	
 			</div>
 			<?php } ?>
-			<div id="addRoom">
+			<span title="Ajouter une pièce"><div id="addRoom">
   				<a href="index.php?action=addRoom&idh=<?= $idh ?>" id="add"><i class="material-icons plus_btn">add</i></a>
-  			</div>
+  			</div></span>
   			<p id="test"></p>
 		</div>
 	<?php }
