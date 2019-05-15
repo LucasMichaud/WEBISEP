@@ -25,9 +25,15 @@
 				<ul>
 					<li class="onglet"><a href="index.php?action=AProposDeNous">A propos</a></li>
 					<li class="onglet"><a href="index.php?action=expertise">Expertise </a></li>	
-					<li class="onglet"><a href="index.php?action=FAQ">FAQ </a></li>
-
+					<?php  if(isset($_SESSION["admin"]) AND $_SESSION["admin"] == 1) { ?>
+					<li class="onglet"><a href="index.php?action=cat">Catalogue</a></li>
+					<?php }?>
+					<li class="onglet"><a href="index.php?action=FAQ">FAQ</a></li>
+					<?php if (!empty($_SESSION['pseudo'])) { ?> 
+					<li class="onglet"><a href="index.php?action=billet">Messagerie</a></li>
+					<?php } else { ?>
 					<li class="onglet"><a href="index.php?action=contact">Contact</a></li>
+					<?php }?>
 					<li class="onglet"><a href="index.php?action=forum">Forum </a></li>
 
 					<?php  if(isset($_SESSION["admin"]) AND $_SESSION["admin"] == 1) { ?>
