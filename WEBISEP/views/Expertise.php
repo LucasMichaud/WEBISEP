@@ -4,7 +4,7 @@ include("General.php")
 <html>
 <head>
   <title>Expertise</title>
-  <link rel="stylesheet" href="design/Expertise.css" />
+  <link rel="stylesheet" href="design/expertise.css" />
 
     <meta charset="utf-8">
 </head>
