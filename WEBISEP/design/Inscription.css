@@ -1,20 +1,39 @@
 body{
-    background-image:url(../image/photoAccueil.jpg);
+    background-image:url(../image/inscription.jpg);
     background-size:cover;
     background-repeat:no-repeat; 
     background-attachment:fixed;
 
 }
 
-.cadre{
-	background-color: white;
-	border-radius: 10px;
-	width: 400px;
-	margin-top: 4%;
-	margin-left: auto;
-	margin-right: auto;
-	padding: 3%;
+#already {
+	float: left;
+	margin:5px;
 }
+h2 {
+	display: block;
+	margin-right: 100px;
+	color: #424458;
+}
+
+.cadre {
+	position: absolute;
+	top: 190px;
+	width: 50%;
+	left: 26%;
+}
+
+#profil, #block {
+	margin: 5px;
+	display: inline-grid;
+}
+#block {
+	width: 50%;
+}
+#end table {
+	width: 150px;
+}
+
 input[type=submit]{
 	display: block;
 	background-color: black;
@@ -29,10 +48,4 @@ input[type=submit]{
 }
 input[type=submit]:hover{
 	color: red;
-}
-
-.log2{
-	margin-right: auto;
-	margin-left: auto;
-	width: 430px;
 }

@@ -5,20 +5,19 @@ include("General.php");
 <html>
 	<head>
 		<title>Inscription</title>
-	<link rel="stylesheet" href="design/Connexion.css" />
+		<link rel="stylesheet" href="design/inscription.css" />
 		<meta charset="utf-8">
 	</head>
 	<body>
 				
 <div class="tabl">
-		<div class="cadre">
-			<a href="index.php?action=connexion">Déjà inscrit ?</a>
-			<h2 align="center">Inscription</h2>
-			<br /><br /><br />
+		<div class="cadre" align="center">
+			<div id="already"><a href="index.php?action=connexion" >Déjà inscrit ?</a></div>
+			<h2>Inscription</h2>
 			<form method="POST" action="">
-				<div class="log2">
+				
+				<div id="profil">
 				<table>
-					
 					<tr>
 						<td align="right">
 							<label for ="pseudo">Pseudo: </label>
@@ -57,34 +56,39 @@ include("General.php");
 					</tr>
 					<tr>
 						<td align="right">
-							<label for ="mail2">Confirmation du mail: </label>
+						
 						</td>
 						<td>
-							<input type="email" placeholder="Confirmez votre adresse mail" id="mail2" name="mail2" value="<?php if (isset($mail2)) {echo $mail2;} ?>"/>
-						</td>
-					</tr>
-					<tr>
-						<section>
-						<td align="right">
-							<label for ="mdp">Mot de passe </label>
-						</td>
-						<td>
-							<input type="password" placeholder="mot de passe" id="mdp" name="mdp"/>
-							<progress max="100" value ="0" id="strength" style="width: 161px"></progress>
-						</td>
-						</section>
-					</tr>
-					<tr>
-						<td align="right">
-							<label for ="mdp2">Confirmation du mot de passe </label>
-						</td>
-						<td>
-							<input type="password" placeholder="Confirmez votre mdp" id="mdp2" name="mdp2"/>
+							<input type="email" placeholder="Confirmez l'adresse email" id="mail2" name="mail2" value="<?php if (isset($mail2)) {echo $mail2;} ?>"/>
 						</td>
 					</tr>
 					<tr>
 						<td align="right">
-							<label for ="adresse">Adresse </label>
+							<label for ="mdp">Mot de passe :</label>
+						</td>
+						<td>
+							<input type="password" placeholder="Mot de passe" id="mdp" name="mdp"/>
+						</td>
+					</tr>
+					<tr>
+						<td></td>
+						<td><progress max="100" value ="0" id="strength" style="width: 166px"></progress></td>
+					<tr>
+						<td align="right">
+							
+						</td>
+						<td>
+							<input type="password" placeholder="Confirmez le mot de passe" id="mdp2" name="mdp2"/>
+						</td>
+					</tr>
+				</table>
+				</div>
+				<div id="block">
+				<div id="address">
+					<table>
+					<tr>
+						<td align="right">
+							<label for ="adresse">Adresse :</label>
 						</td>
 						<td>
 							<input type="text" placeholder="Adresse" id="adresse" name="adresse"/>
@@ -93,7 +97,7 @@ include("General.php");
 
 					<tr>
 						<td align="right">
-							<label for ="codepostal">Code Postal </label>
+							<label for ="codepostal">Code Postal :</label>
 						</td>
 						<td>
 							<input type="number" placeholder="Code Postal" id="code" name="code"/>
@@ -102,25 +106,32 @@ include("General.php");
 
 					<tr>
 						<td align="right">
-							<label for ="ville">Ville </label>
+							<label for ="ville">Ville :</label>
 						</td>
 						<td>
 							<input type="text" placeholder="Ville" id="ville" name="ville"/>
 						</td>
 					</tr>
-						<td align="right">
-							<label for="condition">Accepter les conditions</label>
+				</table>
+				</div>
+				<div id="end">
+					<table>
+					<tr>
+						<td>
+							<div for="condition">Accepter les CGU</label>
 						</td>
 						<td>
 							<input type="checkbox" name="condition" value="condition" required>
-						</td>
-						<td>
-							<span id="cgu_info">Vous devez accepter les CGU pour continuer</span>
+						
 						</td>
 					</tr>
-			</table></div>
-			<br />
+				</table>
+							<span id="cgu_info">Vous devez accepter les CGU pour continuer</span>
+				
+				</div>
+			</table>
 			<input type="submit" name="forminscription" value="Je m'inscris" />
+		</div>
 		</form>
 		<?php
 		if(isset(($erreur)))
