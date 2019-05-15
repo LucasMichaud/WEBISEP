@@ -5,7 +5,7 @@ include("General.php");
 <html>
 	<head>
 		<title>Inscription</title>
-		<link rel="stylesheet" href="design/inscription.css" />
+		<link rel="stylesheet" href="design/Inscription.css" />
 		<meta charset="utf-8">
 	</head>
 	<body>
