@@ -7,13 +7,13 @@ include("General.php");
 <div align="center">
    <head>
       <title>edit Profil</title>
+      <link rel="stylesheet" href="design/editProfil.css">
       <meta charset="utf-8">
-        <link rel="stylesheet" href="design/EditerProfil.css" />
    </head>
    <body>
       
          <h2>Edition de mon profil</h2>
-         <div class="boite" align="center">
+         <div align="center">
             <form method="POST" action="" enctype="multipart/form-data">
 
                <table>
