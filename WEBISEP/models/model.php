@@ -459,7 +459,7 @@ function status_select($idh) {
 /*catalogue*/
 function cat_update($id,$text,$column_name) {
 	$connect = connect();
-	$sql = "UPDATE catalogue SET '".$column_name."'='".$text."' WHERE CatID='".$id."'";  
+	$sql = "UPDATE catalogue SET ".$column_name."='".$text."' WHERE CatID='".$id."'";  
  	if(mysqli_query($connect, $sql))  {  
       echo 'Data Updated';  
  	}   
