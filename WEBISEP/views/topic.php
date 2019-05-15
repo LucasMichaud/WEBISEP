@@ -53,7 +53,7 @@ while ($liste=$request->fetch()) {?>
 				$mID=$listeMessage['id'];
 				if (isset($_SESSION['admin']) && ($_SESSION['admin'])==1) {
 					?>
-					<a class="delete" href="index.php?action=topic&var=<?= $selection ?>&numtopic=<?=$numtopic?>&deleteMessage=<?= $mID?>">Supprimer </a>
+					<a class="delete" href="index.php?action=topic&var=<?= $selection ?>&numtopic=<?=$numtopic?>&deleteMessage=<?= $mID?>"><i class="material-icons">delete</i></a>
 				<?php } ?>
 			</div>
 		<?php }?>

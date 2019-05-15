@@ -93,9 +93,9 @@ h1{
 }
 
 .delete{
-        text-decoration: none;
-        color: red;
+    text-decoration: none;
+    color: black;
 }
 .delete:hover{
-        color: blue;
+        color: red;
 }
