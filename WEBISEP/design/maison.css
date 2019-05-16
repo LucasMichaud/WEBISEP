@@ -139,16 +139,28 @@ body {
 }
 #options {
   display: inline-grid;
-  margin-bottom: 30px;
+  margin-bottom: 15px;
+  margin-top: 10px;
+  cursor: pointer;
 }
 #options div {
   position: relative;
 }
 #parameters {
   position: absolute;
-  top: 10px;
-  left: 6px;
+  left: 5px;
 }
+.listecap {
+  position: absolute;
+  top: 5px;
+}
+.listecap button{
+  color: black;
+  border: none;
+  text-decoration: none;
+  background: none;
+}
+
 
 .setting_btn {
   color: black;

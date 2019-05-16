@@ -83,7 +83,14 @@ if (!empty($_SESSION['id'])) {
 					</div>
 					<div id="options">
 						<div id="parameters">
-							<span title="Modifier la pièce"><a href="index.php?action=editRoom&idh=<?= $idh ?>&idr=<?= $idr ?>"><i class="material-icons setting_btn">settings</i></a></span>
+							<span title="Modifier la pièce">
+								<a href="index.php?action=editRoom&idh=<?= $idh ?>&idr=<?= $idr ?>"><i class="material-icons setting_btn">settings</i></a>
+							</span>
+						</div>
+						<div class="listecap" id="li<?= $room["RoomID"] ?>">
+							<span title="Afficher la liste des capteurs de la pièce">
+								<button class="butliste"><i class="material-icons list">list</i></button>
+							</span>		
 						</div>
 						<?php
 						if(isset(($room['RoomTempState']))) { 
@@ -96,6 +103,8 @@ if (!empty($_SESSION['id'])) {
 				            <p class='print'><span id='print".$room["RoomID"]."'></span>°C</p>
 				        </div>
 				    	"; } ?>
+					</div>
+					<div id="roomli<?= $room["RoomID"] ?>">
 					</div>
 				</div>	
 			</div>
@@ -113,11 +122,17 @@ if (!empty($_SESSION['id'])) {
 	</body>
 </html>
 <script>
-	$(document).on('load', '.vertical', function(){  
+	/*$(document).on('load', '.vertical', function(){  
 	    var id = $(this).data("id");  
 	    var slider = $(this).value;
 	    var output = document.getElementById("test");
 		output.innerHTML = slider.value;
-	}); 
-	
+	});*/
+$(document).ready(function(){ 
+
+	$(document).on('click', '.butliste', function(){
+
+		alert("click");
+	});
+});
 </script>
