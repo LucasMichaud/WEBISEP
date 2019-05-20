@@ -92,12 +92,31 @@ function addCaptors(){
             }
             for (i=0;i<number;i++){
                 /*newCaptors.appendChild(document.createTextNode("Nom de la lampe " + (i+1)));*/
+                var div = document.createElement("div");
 
                 var input = document.createElement("input");
                 input.type = "text";
                 input.name = "nbCaptor" + i;
                 input.placeholder = "Nom du capteur " + (i+1);
                 newCaptors.appendChild(input);
+                
+                var select = document.createElement("select");
+                select.type = "select";
+                select.name = "typeCaptor" + i;
+
+<?php $select = select_type();
+foreach($select as $row) {
+    $CatType = $row["CatType"]; ?>
+
+                var option = document.createElement("option");
+                option.value = "<?php echo $CatType; ?>";
+                var text = document.createTextNode("<?php echo $CatType; ?>");
+                option.appendChild(text);
+                select.appendChild(option);
+<?php } ?>
+
+                div.appendChild(select);
+                newCaptors.appendChild(div);
                 newCaptors.appendChild(document.createElement("br"));
             }
         }

@@ -268,8 +268,8 @@ function insertRoom($roomTempState,$idm,$idh) {
     }
     $nbCaptor = $_POST['nbCaptor'];
     for ($i=0;$i<$nbCaptor;$i++) {
-		$reqCaptor = $bdd->prepare("INSERT INTO `captor`(`CaptorName`, `RoomID`) VALUES (:CaptorName,:RoomID)");
-		$reqCaptor->execute(['CaptorName'=> $_POST['nbCaptor'.$i],'RoomID' => $roomId['RoomID']]);
+		$reqCaptor = $bdd->prepare("INSERT INTO `captor`(`CaptorName`, `RoomID`, `CaptorType`) VALUES (:CaptorName,:RoomID,:CaptorType)");
+		$reqCaptor->execute(['CaptorName'=> $_POST['nbCaptor'.$i],'RoomID' => $roomId['RoomID'],'CaptorType' => $_POST['typeCaptor'.$i]]);
     } 
 }
 
@@ -349,9 +349,9 @@ function window_select() {
  	$result = mysqli_query($connect, $sql);
  	return $result;
 }
-function captor_update($id,$text) {
+function captor_update($id,$text,$column_name) {
 	$connect = connect();
-	$sql = "UPDATE captor SET CaptorName ='$text' WHERE CaptorID ='$id'";  
+	$sql = "UPDATE captor SET ".$column_name." ='".$text."' WHERE CaptorID ='".$id."'";  
  	if(mysqli_query($connect, $sql))  {  
       echo 'Data Updated';  
  	}   
@@ -363,7 +363,7 @@ function captor_delete() {
 }
 function captor_insert() {
 	$connect = connect();
-    $sql = "INSERT INTO captor(CaptorName,RoomID) VALUES('".$_POST["captor_name"]."',".$_GET['idr'].")";  
+    $sql = "INSERT INTO captor(CaptorName,RoomID,CaptorType) VALUES('".$_POST["captor_name"]."',".$_GET['idr'].",'".$_POST["captor_type"]."')"; 
     mysqli_query($connect, $sql);
 }
 function captor_select() {
@@ -481,6 +481,12 @@ function cat_select() {
  	return $result;
 }
 
+
+function select_type() {
+	$bdd = bdd();
+	$select = $bdd->query('SELECT * FROM catalogue');
+	return $select;
+}
 
 
 

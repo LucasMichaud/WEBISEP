@@ -204,25 +204,28 @@
     }  
     fetch_captor();  
     $(document).on('click', '#btn_add_captor', function(){  
-      var captor_name = $('#captor_name').text();  
-        if(captor_name == '') {    
+      var captor_name = $('#captor_name').text();
+      var x = document.getElementById("captor_type").selectedIndex; 
+      var y = document.getElementById("captor_type").options;
+      var captor_type = y[x].text;
+        if(captor_name == '' || captor_type == '') {    
           return false;  
         }  
       $.ajax({  
         url:"index.php?action=captor_add&idr='<?= $idr ?>'",  
         method:"POST",  
-        data:{captor_name:captor_name},  
+        data:{captor_name:captor_name,captor_type:captor_type},  
         dataType:"text",  
         success:function(data) {   
           fetch_captor();  
         }  
       })  
     });  
-    function edit_captor(id, text) {  
+    function edit_captor(id, text, column_name) {  
       $.ajax({  
         url:"index.php?action=captor_edit",  
         method:"POST",  
-        data:{id:id, text:text},  
+        data:{id:id, text:text, column_name:column_name},  
         dataType:"text",  
         success:function(data){}  
       });  
@@ -230,10 +233,15 @@
     $(document).on('blur', '.captor_name', function(){  
       var id = $(this).data("id1");  
       var captor_name = $(this).text();  
-      edit_captor(id, captor_name);  
-    });  
+      edit_captor(id, captor_name, "CaptorName");  
+    });
+    $(document).on('blur', '.captor_type', function(){  
+      var id = $(this).data("id2");  
+      var captor_type = $(this).text();  
+      edit_captor(id, captor_type, "CaptorType");  
+    }); 
     $(document).on('click', '.btn_delete_captor', function(){  
-      var id=$(this).data("id2");  
+      var id=$(this).data("id3");  
       $.ajax({  
         url:"index.php?action=captor_remove",  
         method:"POST",  

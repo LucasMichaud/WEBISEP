@@ -418,7 +418,8 @@ function captor_fetch() {
            $output .= '  
                 <tr>    
                      <td class="captor_name" data-id1="'.$row["CaptorID"].'" contenteditable>'.$row["CaptorName"].'</td>   
-                     <td><button type="button" name="btn_delete_captor" data-id2="'.$row["CaptorID"].'" class="btn_delete_captor"><i class="material-icons">delete</i></button></td>  
+                     <td class="captor_type" data-id2="'.$row["CaptorID"].'" contenteditable>'.$row["CaptorType"].'</td>
+                     <td><button type="button" name="btn_delete_captor" data-id3="'.$row["CaptorID"].'" class="btn_delete_captor"><i class="material-icons">delete</i></button></td>  
                 </tr>  
            ';  
       }  
@@ -431,7 +432,15 @@ function captor_fetch() {
   }  
   $output .='  
            <tr>  
-                <td id="captor_name" contenteditable>Nouveau Capteur</td>    
+                <td id="captor_name" contenteditable>Nouveau Capteur</td>
+                <td><select id="captor_type">';
+
+  $select = select_type();
+  foreach($select as $row) {
+      $output .='<option value="'.$row["CatType"].'">'.$row["CatType"].'</option>';
+  }
+
+  $output .='</select></td>    
                 <td><button type="button" name="btn_add_captor" id="btn_add_captor"><i class="material-icons">add</i></button></td>  
            </tr>
            </table>
@@ -442,8 +451,9 @@ function captor_fetch() {
 
 function captor_edit() {
   $id = $_POST["id"];  
-  $text = $_POST["text"];    
-  captor_update($id,$text);
+  $text = $_POST["text"];  
+  $column_name = $_POST["column_name"];    
+  captor_update($id,$text,$column_name);
 }
 
 function house_add() {
