@@ -79,7 +79,20 @@ if (!empty($_SESSION['id'])) {
   							</label>
   						</div>
 
-  						<?php } ?>
+  						<?php } $captors = captors($idr); ?>
+  						<div>
+  							<?php 
+						foreach ($captors as $captor) { 
+							$idc = $captor['CaptorID'];
+						?>
+
+  						<div>
+							<p><?php echo $captor['CaptorName']; ?> / <?php echo $captor['CaptorType']; ?></p>
+
+						</div>
+
+						<?php } ?>
+						</div>
 					</div>
 					<div id="options">
 						<div id="parameters">
@@ -87,9 +100,9 @@ if (!empty($_SESSION['id'])) {
 								<a href="index.php?action=editRoom&idh=<?= $idh ?>&idr=<?= $idr ?>"><i class="material-icons setting_btn">settings</i></a>
 							</span>
 						</div>
-						<div class="listecap" id="li<?= $room["RoomID"] ?>">
+						<div class="listecap">
 							<span title="Afficher la liste des capteurs de la pièce">
-								<button class="butliste"><i class="material-icons list">list</i></button>
+								<i class="material-icons list">list</i>
 							</span>		
 						</div>
 						<?php
@@ -128,11 +141,4 @@ if (!empty($_SESSION['id'])) {
 	    var output = document.getElementById("test");
 		output.innerHTML = slider.value;
 	});*/
-$(document).ready(function(){ 
-
-	$(document).on('click', '.butliste', function(){
-
-		alert("click");
-	});
-});
 </script>
