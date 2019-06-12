@@ -1,0 +1,16 @@
+tr:first-child {
+	background-color: #cfcfcf;
+	box-shadow: rgba(0,0,0,0.1) 0 5px 15px;
+  height: 50px;
+}
+th {
+	padding: 10px;
+}
+td {
+  padding: 5px 5px 5px 10px;
+}
+table {
+	background-color: rgba(243, 243, 243, 0.6);
+ 	text-align: center;
+ 	border-collapse: collapse;
+} 

@@ -25,7 +25,7 @@ if (!empty($_SESSION['id'])) {
 				foreach($houseActive as $row) {
 					$houseName = $row["HouseName"];
 					echo $houseName;
-				}
+			
 				?>
 			</div>
 			<?php foreach($rooms as $room) { 
@@ -37,108 +37,132 @@ if (!empty($_SESSION['id'])) {
 					<div id="pièce"><?php echo $room['RoomName']; ?></div>
 					<div id="info">
 						<div id="temp"><?php if(isset(($room['RoomTemp']))) { echo $room['RoomTemp'].'°C'; } ?></div>
-						<div id="light"></div>
-						<div id="captor"><span title="Signaler un capteur défectueux ou autre problème"><a href="index.php?action=billet" id="report_problem"><i class="material-icons report_problem">report_problem</i></a></span></div>
-					</div>
-				</div>
-				<div id="bot">
-					<div id="control">
-
-						<?php $lamps = lamps($idr);
-						foreach($lamps as $lamp) {
-							$idl = $lamp['LampID'];
-							$statel = $lamp['LampCondition'];
-						?>
-
-						<div>
-							<p><?php echo $lamp['LampName']; ?></p>
-							<label class="switch">
-								<a href="index.php?action=actionLamp&idh=<?= $idh ?>&idl=<?= $idl ?>">
-									<input type="checkbox" name="switch" value="1"
-										<?php if($statel == true) {echo 'checked';}?> >
-									  <span class="slider lamp"></span>
-								</a>
-  							</label>
-  						</div>
-
-  						<?php }
-						$windows = windows($idr);
-						foreach ($windows as $window) { 
-							$idw = $window['WindowID'];
-							$statew = $window['WindowCondition'];
-						?>
-
-  						<div>
-							<p><?php echo $window['WindowName']; ?></p>
-							<label class="switch">
-								<a href="index.php?action=actionWindow&idh=<?= $idh ?>&idw=<?= $idw ?>">
-									<input type="checkbox" name="switch" value="1"
-										<?php if($statew == true) {echo 'checked';}?> >
-									<span class="slider window"></span>
-								</a>
-  							</label>
-  						</div>
-
-  						<?php } $captors = captors($idr); ?>
-  						<div>
-  							<?php 
-						foreach ($captors as $captor) { 
-							$idc = $captor['CaptorID'];
-						?>
-
-  						<div>
-							<p><?php echo $captor['CaptorName']; ?> / <?php echo $captor['CaptorType']; ?></p>
-
-						</div>
-
-						<?php } ?>
-						</div>
-					</div>
-					<div id="options">
 						<div id="parameters">
 							<span title="Modifier la pièce">
 								<a href="index.php?action=editRoom&idh=<?= $idh ?>&idr=<?= $idr ?>"><i class="material-icons setting_btn">settings</i></a>
 							</span>
 						</div>
-						<div class="listecap">
-							<span title="Afficher la liste des capteurs de la pièce">
-								<i class="material-icons list">list</i>
-							</span>		
+						<div id="captor"><span title="Signaler un capteur défectueux ou autre problème"><a href="index.php?action=billet" id="report_problem"><i class="material-icons report_problem">report_problem</i></a></span></div>
+					</div>
+				</div>
+				<div id="bot">
+						
+
+						
+								<?php
+							if($room['RoomTempState'] == 1) { 
+								$roomTempReq = $room['RoomTempReq'];
+								echo '<div id="thermos">
+								<form method="post" action="index.php?action=newtemp&idh='.$idh.'">
+									<div class="range-slider">
+	        							<div class="thermometer"></div>
+					            			<input class="vertical" name="tempReq" id="tempReq" type="range" step="1" value="'.$roomTempReq.'" min="10" max="40">
+					           			 <div class="bulb"></div>
+					            		<p class="print"><span id="print"></span>°C</p>
+					        		</div>
+
+					        		<div id="cercle">
+                        					<span title="Modifier la température">
+                        						<button type="submit" id="submit" value=""><i class="material-icons">refresh</i></button>
+                        					</span>
+                    				</div>
+                    				<input type="hidden" name="roomTempUp" id="roomTempUp" value="'.$idr.'">
+					        	</form>
+					        	</div>
+					    	'; } ?>
+				        
+
+				    	<div id="bigliste">
+
+					    	<div id="actionneurs">
+								<?php $lamps = lamps($idr);
+								foreach($lamps as $lamp) {
+									$idl = $lamp['LampID'];
+									$statel = $lamp['LampCondition'];
+								?>
+
+								<div id="lum">
+									<p><?php echo $lamp['LampName']; ?></p>
+									<div id="click">
+										<label class="switch">
+											<a href="index.php?action=actionLamp&idh=<?= $idh ?>&idl=<?= $idl ?>">
+												<input type="checkbox" name="switch" value="1"
+													<?php if($statel == true) {echo 'checked';}?> >
+												  <span class="slider lamp"></span>
+											</a>
+			  							</label>
+			  						</div>
+		  						</div>
+
+		  						<?php }
+								$windows = windows($idr);
+								foreach ($windows as $window) { 
+									$idw = $window['WindowID'];
+									$statew = $window['WindowCondition'];
+								?>
+
+		  						<div id="win">
+									<p><?php echo $window['WindowName']; ?></p>
+									<div id="click">
+										<label class="switch">
+											<a href="index.php?action=actionWindow&idh=<?= $idh ?>&idw=<?= $idw ?>">
+												<input type="checkbox" name="switch" value="1"
+													<?php if($statew == true) {echo 'checked';}?> >
+												<span class="slider window"></span>
+											</a>
+			  							</label>
+		  							</div>
+		  						</div>
+		  					<?php } ?>
+		  					</div>
+
+		  					<div id="ligne"></div>
+
+
+	  						<div id="listedecapteurs">
+		  						<?php $captors = captors($idr); ?>
+		  						<div>
+		  							<?php 
+								foreach ($captors as $captor) { 
+									$idc = $captor['CaptorID'];
+								?>
+			  						<div>
+										<p><?php echo $captor['CaptorName']; ?> / <?php echo $captor['CaptorType']; ?></p>
+
+									</div>
+								<?php } ?>
+								</div>
+							</div>
+
 						</div>
-						<?php
-						if(isset(($room['RoomTempState']))) { 
-							$roomTempReq = $room['RoomTempReq'];
-							echo "
-						<div class='range-slider'>
-        					<div class='thermometer'></div>
-				            <input class='vertical' data-id='".$room["RoomID"]."' type='range' step='0.5' value='".$roomTempReq."' min='10' max='30'>
-				            <div class='bulb'></div>
-				            <p class='print'><span id='print".$room["RoomID"]."'></span>°C</p>
-				        </div>
-				    	"; } ?>
-					</div>
-					<div id="roomli<?= $room["RoomID"] ?>">
-					</div>
 				</div>	
+
 			</div>
+
+
 			<?php } ?>
-			<span title="Ajouter une pièce"><div id="addRoom">
-  				<a href="index.php?action=addRoom&idh=<?= $idh ?>" id="add"><i class="material-icons plus_btn">add</i></a>
-  			</div></span>
-  			<p id="test"></p>
+			<span title="Ajouter une pièce">
+				<div id="addRoom">
+  					<a href="index.php?action=addRoom&idh=<?= $idh ?>" id="add"><i class="material-icons plus_btn">add</i></a>
+  				</div>
+  			</span>
 		</div>
-	<?php }
-	else{
+	<?php } 
+}
+	else {
 		header('Location:index.php?action=connexion');
 		
 	}?>
 	</body>
 </html>
 <script>
-	/*$(document).on('load', '.vertical', function(){  
-	    var id = $(this).data("id");  
-	    var slider = $(this).value;
-	    var output = document.getElementById("test");
-		output.innerHTML = slider.value;
-	});*/
+var slider = document.getElementById("tempReq");
+var output = document.getElementById("print");
+output.innerHTML = slider.value;
+
+slider.oninput = function() {
+	output.innerHTML = this.value; 
+}  
+
+
 </script>

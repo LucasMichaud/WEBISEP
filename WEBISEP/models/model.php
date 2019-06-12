@@ -247,6 +247,25 @@ function onw(int $getidw) {
     $onw->execute(array($getidw));
     return $onw;
 }
+
+function tempReq(int $tempReq, int $idr) {
+	$bdd = bdd();
+	$req = $bdd->prepare('UPDATE room SET RoomTempReq = ? WHERE RoomID = ?');
+	$req->execute(array($tempReq,$idr));
+	return $req;
+
+}
+
+function getTempLog(int $val) {
+	$bdd = bdd();
+	$req = $bdd->prepare('UPDATE room SET RoomTemp = ? WHERE RoomID = 40');
+	$req->execute(array($val));
+	return $req;
+}
+
+
+
+
 function insertRoom($roomTempState,$idm,$idh) {
     $bdd = bdd();
     $req = $bdd->prepare("INSERT INTO room (`RoomName`, `RoomTempState`,MemberID,HouseID) VALUES (? , ?, ?, ?)");

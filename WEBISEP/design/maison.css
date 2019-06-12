@@ -48,38 +48,40 @@ body {
   position: relative;
   background-color: #cfcfcf;
 }
+#pièce,#infos {
+  display: inline-block;
+}
 #pièce {
-  width: 50%;
-  /*border: 1px solid black;*/
+  width: 40%;
   text-align: left;
   float: left;
   height: 33px;
-  padding: 15px 0 0 10px;
+  margin: 15px 0 0 20px;
 }
 #info {
+  width: 40%;
   float: right;
-  padding-right: 5px;
+  height: 50px;
 }
-#temp, #light, #captor{
-  /*border: 1px solid black;*/
+#temp, #parameters, #captor{
   display: inline-block;
   height: 33px;
   vertical-align: middle;
   padding: 15px 0 0;
 }
-#light {
-  width: 25px;
-}
 #temp {
-  width: 40px;
+  width: 35%;
 }
 #captor{
-  width: 50px;
+  width: 30%;
+}
+#parameters {
+  width: 22%;
 }
 .report_problem{
   position: absolute;
-  right: 25px;
-  top: 14px;
+  right: 15px;
+  top: 15px;
   color: black;
 }
 
@@ -88,7 +90,6 @@ body {
   display: none;
 } 
 #bot {
-  /*display: none;*/
   background-color: rgba(243, 243, 243, 0.8);
 } 
 #box input[type=checkbox]:checked~#bot {
@@ -96,69 +97,65 @@ body {
         color: black;
         font-size: 1em;
 }
-#box #info label {
-        vertical-align: middle;
-        display: inline-block;
-        width: 20px;
-        height: 30px;
-        position: relative;
-}
-#box #info label::before { /*syntaxe pour metre une flèche*/
-        content: '';
-        position: absolute;
-        right: 3px;/*flèche à droite*/
-        top: 50%;
-        margin-top: -6px;
-        border: 6px solid transparent;
-        border-left-color: inherit;
-}
 #bot {
   position: relative;
-  height: auto; 
-  /*border: 1px solid black;*/
 }
-#control {
-  /*border: 1px solid black;*/
-  display: inline-grid;
-  width: 80%;
-  padding-top: 5px;
-  height: calc(100% - 38px);
-}
-#control div {
-  /*border: 1px solid black;*/
+#thermos {
   position: relative;
-  
+  width: 25%;
+}
+#bigliste {
+  width: 70%;
+  margin-left: 25%;
+}
+#ligne {
+  background-color: #cfcfcf;
+  height: 5px;
+  width: 100%;
+}
+#actionneurs,#listedecapteurs {
+  display: inline-grid;
+  width: 100%;
+  position: relative;
+}
+#click  {
+  position: relative;
+}
+form {
+  margin-block-end:0;
+}
+p {
+  margin-block-start: 11px;
+  margin-block-end: 11px;
 }
 
-#control div p {
-  display: inline-block;
-  margin-top: 0;
-  text-align: left;
-  padding-top: 1px;
-  padding-left: 20%;
+#cercle {
+  position: absolute;
+  top:125px;
+  left: 20px;
+  width: 30px;
+  
 }
-#options {
-  display: inline-grid;
-  margin-bottom: 15px;
-  margin-top: 10px;
-  cursor: pointer;
-}
-#options div {
+#submit {
+  text-align: center;
+  box-shadow: rgba(0,0,0,0.1) 0 5px 15px;
   position: relative;
-}
-#parameters {
-  position: absolute;
-  left: 5px;
-}
-.listecap {
-  position: absolute;
-  top: 5px;
-}
-.listecap button{
-  color: black;
+  background-color: #cfcfcf;
+  color: white;
   border: none;
+  border-radius: 35px;
+  background: black;
   text-decoration: none;
-  background: none;
+  width: 29px;
+  height: 29px; 
+  cursor: pointer;
+  
+}
+#cercle .material-icons{
+  position: absolute;
+  color: white;
+  right: 3px;
+  top: 2px;
 }
 
 
@@ -168,10 +165,10 @@ body {
 .switch {
   position: absolute;
   display: block;
-  right: 20%;
-  top: 8px;
+  right: 5%;
   width: 30px;
   height: 17px;
+  bottom: 11px;
 }
 
 .switch input { 

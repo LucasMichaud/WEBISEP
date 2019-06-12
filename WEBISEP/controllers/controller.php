@@ -2,6 +2,21 @@
 
 include "models/model.php";
 
+function logs() {
+  include "views/logs.php";
+}
+
+
+function sendActionLog($val) {
+    $ch = curl_init();
+    curl_setopt($ch,CURLOPT_URL,"http://projets-tomcat.isep.fr:8080/appService/?ACTION=COMMAND&TEAM=004D&TRAME=1004D1301".$val."11");
+    curl_setopt($ch, CURLOPT_HEADER, FALSE);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+    curl_exec($ch);
+    curl_close($ch);
+}
+
+
 /*Forum*/
 function forum() {
   $reqcategories= affichForum();
@@ -170,7 +185,18 @@ function AProposDeNous(){
 }
 
 /*Lucas*/
+
+function newtemp() {
+  if (isset($_POST['roomTempUp'])) {
+    $idr = (int) $_POST['roomTempUp'];
+    $tempReq = (int) $_POST['tempReq'];
+    tempReq($tempReq,$idr);
+  } 
+  include "views/maison.php"; 
+}
+
 function maison() {
+    include "views/logs.php";
     include "views/maison.php";
 }
 function vertical() {
@@ -181,24 +207,36 @@ function general() {
 }
 function actionLamp() {
     if(isset($_GET['idl']) AND !empty($_GET['idl'])) {
-        $getidl = (int) $_GET['idl'];
-        $checkl = checkl($getidl);
+        $idl = (int) $_GET['idl'];
+        $checkl = checkl($idl);
         if($checkl->rowCount() == 1) {
-            offl($getidl);
+            offl($idl);
+            if ($idl == 62) {
+              sendActionLog("5555");
+            } else {
+            sendActionLog("0000");
+            }
         } else {
-            onl($getidl);
+            onl($idl);
+            if ($idl == 62) {
+              sendActionLog("2222");
+            } else {
+              sendActionLog("1111");
+            }
         } 
     include "views/maison.php";
     } 
 }
 function actionWindow() {
     if(isset($_GET['idw']) AND !empty($_GET['idw'])) {
-        $getidw = (int) $_GET['idw'];
-        $checkw = checkw($getidw);
+        $idw = (int) $_GET['idw'];
+        $checkw = checkw($idw);
         if($checkw->rowCount() == 1) {
-            offw($getidw);
+            offw($idw);
+            sendActionLog("4444");
         } else {
-            onw($getidw);
+            onw($idw);
+            sendActionLog("3333");
         } 
     include "views/maison.php";
     } 
